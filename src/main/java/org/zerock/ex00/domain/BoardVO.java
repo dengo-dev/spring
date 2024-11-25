@@ -5,18 +5,16 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class BoardV0 {
+public class BoardVO {
 
     private Long bno;
-
     private String title;
-
     private String content;
-
     private String writer;
 
-    private LocalDateTime regDate;
+//    private boolean delFlag;
 
+    private LocalDateTime regDate;
     private LocalDateTime updateDate;
 
 }
