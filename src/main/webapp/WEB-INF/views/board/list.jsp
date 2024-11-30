@@ -25,6 +25,9 @@
     </div>
     <div class="card-body">
         <div class="table-responsive">
+
+            ${pageMaker}
+
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                 <tr>
@@ -35,28 +38,41 @@
                     <th>UpdateDate</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody class="tbody">
                     <c:forEach var="board" items="${list}">
-                        <tr>
-                            <th><c:out value="${board.bno}"/></th>
-                            <th><c:out value="${board.title}"/></th>
-                            <th><c:out value="${board.writer}"/></th>
-                            <th><c:out value="${board.regDate}"/></th>
-                            <th><c:out value="${board.updateDate}"/> date</th>
+                        <tr data-bno="${board.bno}">
+                            <td><c:out value="${board.bno}"/></td>
+                            <td><c:out value="${board.title}"/></td>
+                            <td><c:out value="${board.writer}"/></td>
+                            <td><c:out value="${board.regDate}"/></td>
+                            <td><c:out value="${board.updateDate}"/> date</td>
                         </tr>
                     </c:forEach>
                 </tbody>
-                <tbody>
-                <tr>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>61</td>
-                    <td>2011/04/25</td>
-                    <td>$320,800</td>
-                </tr>
-                </tbody>
             </table>
+            <div>
+
+                <ul class="pagination">
+
+                    <c:if test="${pageMaker.prev}">
+                        <li class="page-item">
+                            <a class="page-link" href="${pageMaker.startPage - 1}" tabindex="-1">Previous</a>
+                        </li>
+                    </c:if>
+                    <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
+                        <li class="page-item ${cri.pageNum == num ? 'active':''} ">
+                            <a class="page-link" href="${num}"> ${num} </a>
+                        </li>
+                    </c:forEach>
+
+                    <c:if test="${pageMaker.next}">
+                        <li class="page-item">
+                            <a class="page-link" href="${pageMaker.endPage + 1}">Next</a>
+                        </li>
+                    </c:if>
+                </ul>
+
+            </div>
         </div>
     </div>
 </div>
@@ -91,6 +107,16 @@
     if (result) {
         myModal.show()
     }
+
+    document.querySelector('.tbody').addEventListener("click",(e)=>{
+        const target = e.target.closest("tr")
+        const bno = target.dataset.bno
+        console.log(bno)
+
+        console.log(`/board/read/\${bno}`)
+
+        window.location=`/board/read/\${bno}`
+    })
 
 </script>
 
